@@ -15,7 +15,7 @@ public class CallerManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (Input.anyKeyDown)
+		if (CALLER_PANEL.activeInHierarchy && Input.anyKeyDown)
 		{
 			CALLER_PANEL.SetActive(false);
 			ChessingManager.Instance.InvokeStart();
