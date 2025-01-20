@@ -45,11 +45,11 @@ public class ChessingManager : MonoBehaviour
 
 	public void InvokeStart()
 	{
-		Debug.Log("Ciallo world! (Chessing Manager)");
+		Debug.Log("Ciallo world! (Chessing Manager)");  // control flow enters
 
 		CHESSING_PANEL.SetActive(true);
 
-		CHESSBOARD.GetComponent<RectTransform>().sizeDelta = get_格子_num() * Constants.格子_SIZE;
+		CHESSBOARD.GetComponent<RectTransform>().sizeDelta = get_格子_num() * Constants.格子_SIZE_PX;
 
 		for (int i = 0; i < get_格子_num().x; i++)
 		{
@@ -57,16 +57,16 @@ public class ChessingManager : MonoBehaviour
 			{
 				if (chessboardStyle == ChessboardStyle.Three && i >= 9 && j >= 9)
 				{
-					continue;
+					continue;   // deal with non-square chessboard
 				}
 
 				Instantiate(PREFAB_格子, CHESSBOARD.transform)
 					.GetComponent<RectTransform>().anchoredPosition =
-					new Vector2(i * Constants.格子_SIZE, -j * Constants.格子_SIZE);
+					new Vector2(i * Constants.格子_SIZE_PX, -j * Constants.格子_SIZE_PX);
 			}
 		}
 
-		Debug.Log("Chessboard generation completed.");
+		Debug.Log("Chessboard generation completes.");
 	}
 
 	/// <returns>x向右，y向下</returns>
