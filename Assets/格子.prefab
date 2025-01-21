@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 7261915782004276297}
   - component: {fileID: 9014448962311347398}
   m_Layer: 0
-  m_Name: "\u68CB\u5B50"
+  m_Name: Chess
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

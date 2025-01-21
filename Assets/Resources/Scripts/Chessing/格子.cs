@@ -4,16 +4,22 @@
 
 //public class 格子 : MonoBehaviour
 //{
-public class 格子
+public struct 格子
 {
-	public bool haveChess = false;  // C#，你就是这一点不行啊（指没有结构体默认构造）
-	public Features feature = Features.Empty;
+	public bool haveChess;  // C#，你就是这一点不行啊（指没有结构体默认构造）
+	public Features feature;
 
 	public enum Features    // 地物
 	{
 		Empty,
 		Grass,
 		Flower
+	}
+
+	public void Initialize()    // pseudo-ctor
+	{
+		haveChess = false;
+		feature = Features.Empty;
 	}
 }
 

@@ -11,7 +11,7 @@ public class ChessingManager : MonoBehaviour
 	public ChessboardStyle chessboardStyle = ChessboardStyle.One;
 
 	private bool is_chessing = false;
-	private 格子[,] chessboard_map = new 格子[15, 15];
+	private ChessboardMap map = null;
 
 	public static ChessingManager Instance { get; private set; }
 
@@ -54,11 +54,19 @@ public class ChessingManager : MonoBehaviour
 
 			if (colli != null)
 			{
-				var idx = get_idx_from_格子_pos(colli.gameObject.transform.parent
-					.GetComponent<RectTransform>().anchoredPosition);
+				var gezi = colli.gameObject.transform.parent.gameObject;    // 点到的格子对象
+				var idx = get_idx_from_格子_pos(gezi.GetComponent<RectTransform>().anchoredPosition);
 
 				//
 				Debug.Log($"{Mouse.current.position.value}: {idx}");
+				//
+
+				var (x, y) = (idx.x, idx.y);
+
+				map.落子(x, y, gezi);
+
+				//
+				Debug.Log($"{idx}: 落子");
 				//
 			}
 			else
@@ -76,7 +84,8 @@ public class ChessingManager : MonoBehaviour
 
 		CHESSING_PANEL.SetActive(true);
 
-		CHESSBOARD.GetComponent<RectTransform>().sizeDelta = get_格子_num() * Constants.格子_SIZE_PX;
+		CHESSBOARD.GetComponent<RectTransform>().sizeDelta = get_格子_num() * Constants.格子.SIZE_PX;
+		map = new(chessboardStyle);
 
 		for (int i = 0; i < get_格子_num().x; i++)
 		{
@@ -89,7 +98,7 @@ public class ChessingManager : MonoBehaviour
 
 				Instantiate(PREFAB_格子, CHESSBOARD.transform)
 					.GetComponent<RectTransform>().anchoredPosition =
-					new Vector2Int(i * Constants.格子_SIZE_PX, -j * Constants.格子_SIZE_PX);
+					new Vector2Int(i * Constants.格子.SIZE_PX, -j * Constants.格子.SIZE_PX);
 			}
 		}
 
@@ -110,7 +119,7 @@ public class ChessingManager : MonoBehaviour
 
 	private Vector2Int get_idx_from_格子_pos(Vector2 pos_p)
 	{
-		Vector2 tmp = pos_p / Constants.格子_SIZE_PX;  // integer guaranteed
+		Vector2 tmp = pos_p / Constants.格子.SIZE_PX;  // integer guaranteed
 		return new Vector2Int((int)tmp.x, (int)-tmp.y);
 	}
 }
