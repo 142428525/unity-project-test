@@ -1,0 +1,33 @@
+﻿title: Start
+tags:
+position: 0,0
+---
+<<declare $a = 0>>
+f: g
+<<jump Test>>
+===
+title: Test
+position: -268,151
+---
+<<set $a = inc($a)>>
+op: dddd
+mmmmmmmmmmm
+    -> ?
+    -> !
+        <<battle ChessingManager After>>
+        <<stop>>
+    -> …
+        <<jump End>>
+<<jump Start>>
+===
+title: After
+position: -268,308
+---
+666 cheater
+<<jump End>>
+===
+title: End
+position: 12,219
+---
+null: NullReferenceException at Main.cs ({dice(100)}:{dice(50)}) [br/] visiting times = {$a}
+===

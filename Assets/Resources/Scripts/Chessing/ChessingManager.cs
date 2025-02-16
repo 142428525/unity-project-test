@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Yarn.Unity;
 //using UnityEngine.InputSystem;
 
 public class ChessingManager : MonoBehaviour
@@ -10,8 +11,11 @@ public class ChessingManager : MonoBehaviour
 	public GameObject PREFAB_格子;
 	public ChessboardStyle chessboardStyle = ChessboardStyle.One;
 
+	public DialogueRunner DIALOG_RUNNER;
+
 	private bool is_chessing = false;
 	private ChessboardMap map = null;
+	private string next_dialog_node = null;
 
 	public static ChessingManager Instance { get; private set; }
 
@@ -78,10 +82,12 @@ public class ChessingManager : MonoBehaviour
 		}
 	}
 
-	public void InvokeStart()
+	[YarnCommand("battle")]
+	public void InvokeStart(string next)
 	{
 		Debug.Log("Ciallo world! (Chessing Manager)");  // control flow enters
 
+		next_dialog_node = next;
 		CHESSING_PANEL.SetActive(true);
 
 		CHESSBOARD.GetComponent<RectTransform>().sizeDelta = get_格子_num() * Constants.格子.SIZE_PX;
@@ -105,6 +111,15 @@ public class ChessingManager : MonoBehaviour
 		Debug.Log("Chessboard generation completes.");
 
 		is_chessing = true;
+	}
+
+	public void DebugSkip()
+	{
+		is_chessing = false;
+		CHESSING_PANEL.SetActive(false);
+		DIALOG_RUNNER.StartDialogue(next_dialog_node);
+
+		Debug.Log("Battle skipped by debug button.");
 	}
 
 	/// <returns>x向右，y向下</returns>
